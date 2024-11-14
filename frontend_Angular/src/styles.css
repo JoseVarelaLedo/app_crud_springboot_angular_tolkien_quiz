@@ -1,0 +1,724 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+
+/*contenedor principal********************************/
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/*título principal********************************/
+@font-face {
+  font-family: 'Abbadon';
+  src: url('assets/fonts/abaddon/Abaddon.ttf') format('truetype');
+}
+
+.custom-title {
+  font-family: 'Abbadon', sans-serif;
+  font-size: min(3rem, 5vw);
+  background: linear-gradient(45deg, #d68c7f, #5cff92);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+  animation: pulseTitle 5s infinite ease-in-out;
+  font-weight: 800;
+  margin: 20px 0;
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block; /* necesitamos esto para que el fondo translúcido siga la longitud del texto */
+  padding: 10px 20px; /* necesitamos esto para el espaciadodel fondo translúcido */
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/*animación de pulso para fondo traslúcido********************************/
+@keyframes pulseTitle {
+  0%, 100% {
+    transform: scale(1); /* Estado inicial sin cambio de escala */
+    text-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5)
+  }
+  50% {
+    transform: scale(1.1); /* Se agranda a un 110% */
+    text-shadow: 6px 6px 30px rgba(0, 0, 0, 1);
+  }
+}
+
+/* Fondo translúcido detrás del texto */
+.custom-title::after {
+  content: ""; /* Crea un elemento para el fondo */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3); /* Color claro y translúcido */
+  border-radius: 12px; /* Opcional, bordes redondeados */
+  z-index: -2; /* Coloca el fondo detrás del texto */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para dar algo de profundidad */
+  pointer-events: none; /* Asegura que el fondo no interfiera con interacciones */
+}
+
+/*títulos de sección********************************/
+.tituloSeccion {
+  position: relative; /* Necesario para el fondo translúcido */
+  width: fit-content;
+  margin-left: 5em;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 5px;
+  padding-right: 20%;
+  background: linear-gradient(90deg, rgb(145, 255, 0), rgb(255, 65, 65));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.5);
+  color: transparent;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+  animation: pulseTitle 10s infinite;
+}
+
+/*fondo traslúcido barra de título********************************/
+
+.tituloSeccion::after {
+  content: ""; /* Crea un elemento para el fondo */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(190, 182, 182, 0.6); /* Color claro y translúcido */
+  border-radius: 12px; /* Opcional, bordes redondeados */
+  z-index: -2; /* Coloca el fondo detrás del texto */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para dar algo de profundidad */
+  pointer-events: none; /* Asegura que el fondo no interfiera con interacciones */
+}
+
+
+/*etiqueta con los datos de usuario********************************/
+.datosUsuario {
+  position: absolute; /* fijamos el elemento en la pantalla */
+  display:flex;
+  top: 11em;
+  right: 10px;
+  background-color: #2b2f338a;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.datosUsuario p {
+  color:white;
+  font-weight: bolder;
+  margin: 0;
+}
+
+.logout{
+  position: absolute;
+  top: 14em;
+  right: 10px;
+}
+
+/*botones de inicio y login********************************/
+.homeLoginButtons {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.homeLoginButtons button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+
+/*barra lateral********************************/
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #343a40;
+  padding-top: 20px;
+  z-index: 900;
+  align-content: center;
+  border-right: 1px solid #e0e0e0;
+
+}
+
+.sidebar .nav-link {
+  color: #ffffff;
+  font-size: 1.2rem;
+  padding: 25px 20px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 2px;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #495057;
+  color: #ffffff;
+  border-radius: 5px;
+}
+
+.nav-item {
+  flex: 1 1 calc(50% - 20px);
+  display: flex;
+  justify-content: left;
+}
+
+/*  barra lateral derecha para filtros y cuadro de búsqueda********************************/
+
+
+
+/*contenido principal********************************/
+.main-content {
+  flex: 1;
+  padding: 1em;
+  overflow: auto;
+}
+
+/*encabezado********************************/
+header {
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.body{
+  margin:250px;
+}
+
+
+/* botones de idioma ********************************/
+.btnLangContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(50, 50, 50, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 5px;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.langIcon {
+  width: 20px;
+  height: 14px;
+}
+
+
+
+
+
+/*cuerpo del html********************************/
+body {
+  background-image: url('assets/img/fondoBody.jpg');
+  font-size: 1rem;
+}
+
+/*tabla con sus resultados********************************/
+.table-striped{
+  margin-left: 7em;
+}
+.resultadosBusqueda{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+
+.content {
+  margin-left:20%;
+  padding: 20px;
+}
+
+.lineaTabla {
+  height: fit-content;
+  vertical-align: middle;
+}
+
+
+/*botones de edición y eliminación********************************/
+.button-group {
+  display: flex;
+  gap: 10px;
+
+}
+
+.btn-info, .btn-danger {
+  padding: 10px 15px;
+  font-size: 14px;
+  margin: 5px;
+  width: 80px;
+}
+
+.table thead th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table tbody td {
+  text-align: left;
+  vertical-align: center;
+}
+
+
+.icon-up::before,
+.icon-down::before {
+  color: white;
+}
+
+/*elementos varios para los formularios********************************/
+
+/*estilos para las etiquetas de los formularios********************************/
+form label {
+  position: relative;
+  font-weight: bold;
+  color: white; /* Color del texto en blanco */
+  padding: 5px 10px; /* Añade un poco de espacio interno al texto */
+  margin-bottom: 5px;
+  margin-top: 5px;
+  display: inline-block; /* Ajusta el fondo al tamaño del texto */
+}
+
+
+/*cuerpo traslúcido detrás de la etiqueta********************************/
+form label::before {
+  content: ""; /*necesario para crear el cuadro */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(50, 50, 50, 0.8);
+  border-radius: 5px;
+  z-index: -1;
+}
+
+.camposNickname {
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.camposNickname::before {
+  content: "";
+  position:absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(209, 198, 198, 0.747);
+  border-radius: 5px;
+  z-index: -1;
+}
+
+.selectorNumerico{
+  margin: 20px;
+  width: 4em;
+}
+
+.selectorCategoria{
+  width: fit-content;
+}
+
+.form-select{
+  background-color: rgba(46, 50, 50, 0.332) !important;
+  color: rgb(214, 246, 255) !important;
+}
+
+.col-md-6 {
+  position: relative;
+}
+
+.col-md-6::before{
+  content: "";
+  position:absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(186, 207, 188, 0.568);
+  border-radius: 5px;
+  z-index: -1;
+}
+
+/*elementos para los filtros, sección colapsable en botón********************************/
+
+.botoneraFiltro{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position:relative;
+  width: fit-content;
+  margin-left: 7em;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.botoneraFiltro::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -10px;
+  right: -25px;
+  bottom: -5px;
+  background: linear-gradient(135deg, rgba(71, 104, 165, 0.5), rgba(123, 154, 204, 0.5));
+  border-radius: 20px;
+  z-index: -1;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  animation: fluctuante 3s ease-in-out infinite;
+}
+
+/* animación de degradado fluctuante para loe elementos de la sección de filtros*****************************/
+@keyframes fluctuante {
+  0% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.5), rgba(123, 154, 204, 0.5));
+  }
+  10% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.55), rgba(123, 154, 204, 0.55));
+  }
+  20% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.6), rgba(123, 154, 204, 0.6));
+  }
+  30% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.65), rgba(123, 154, 204, 0.65));
+  }
+  40% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.7), rgba(123, 154, 204, 0.7));
+  }
+  50% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.75), rgba(123, 154, 204, 0.75));
+  }
+  60% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.7), rgba(123, 154, 204, 0.7));
+  }
+  70% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.65), rgba(123, 154, 204, 0.65));
+  }
+  80% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.6), rgba(123, 154, 204, 0.6));
+  }
+  90% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.55), rgba(123, 154, 204, 0.55));
+  }
+  100% {
+    background: linear-gradient(135deg, rgba(71, 104, 165, 0.5), rgba(123, 154, 204, 0.5));
+  }
+}
+
+.btn-secondary{
+  height: fit-content;
+  width: fit-content;
+  margin:3px;
+}
+
+.cuadroBusqueda{
+  width: fit-content;
+  margin-left: 11em;
+}
+
+/* botón colapsable de filtros ********************************/
+
+.contenedorBotonesFiltroYBusqueda.colapsado {
+  display: none;
+}
+
+.btn-toggle {
+  margin-left: 12% ;
+  margin-bottom: 5px;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease; /* Animación suave en hover */
+}
+
+/*efecto de hover para el botón *****************************/
+.btn-toggle:hover {
+  background-color: #0056b3;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/*efecto de enfoque para el botón ****************************************/
+.btn-toggle:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 4px rgba(0, 123, 255, 0.5);
+}
+
+.contenedorBotonesFiltroYBusqueda {
+  position: absolute;
+  top: 7em;
+  left: 12%;
+  width: fit-content;
+
+  z-index: 1000; /* para asegurar que se despliegue encima de otros elementos */
+  padding: 1em;
+
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: flex-end;
+
+  margin-left:20px;
+}
+
+
+.busqueda {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 20px auto;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.busqueda input {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.busqueda input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.busqueda input::placeholder {
+  color: #aaa;
+}
+
+
+input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.desplegable {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  height: auto;
+  appearance: none;
+  background-color: white;
+  transition: border-color 0.3s;
+}
+
+.desplegable:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/*footer ****************************************/
+.app-footer {
+  display: flex;
+  justify-content: flex-end;
+  height: fit-content;
+  background-color: #b9ecb62c;
+}
+
+.app-footer p {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.1em;
+  margin-right: 50px;
+}
+
+.labelSeleccionaCategoria{
+  background-color: rgba(44, 45, 46, 0.692);
+  color: white
+}
+
+/* estilo específico para etiquetas que queramos resaltar con esta clase ****************************************/
+.etiqueta {
+  color: white;
+  min-width: 120px;
+  background-color: black;
+  padding: 5px;
+  border-radius: 4px;
+  font-weight: bolder;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.loginPage{
+  margin-left:25%;
+  position:relative;
+  color:white;
+}
+
+.loginPage::before {
+  content: ""; /* necesitamos esto para generar el cuadro translúcido */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(50, 50, 50, 0.5);
+  border-radius: 8px;
+  z-index: -1; /*para colocar el cuadro detrás del texto */
+}
+
+.errorMessage{
+  color: red;
+  background-color: white;
+  font-weight: bold;
+  width: fit-content;
+}
+
+
+/* texto de la página de bienvenida ****************************************/
+.textoBienvenida {
+  margin-left: 25%;
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  color: #d1d1d1;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #d68c7f, #5cff92);
+
+  animation: subtlePulsatingBackground 8s infinite alternate;
+}
+
+/* animación de fondo pulsante sutil ****************************************/
+@keyframes subtlePulsatingBackground {
+  0% {
+    background: rgba(75, 50, 25, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    background: rgba(75, 90, 75, 0.9);
+    transform: scale(1.05);
+  }
+  100% {
+    background: rgba(50, 75, 50, 0.7);
+    transform: scale(1);
+  }
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* formulario para iniciar sesión ****************************************/
+.formLogin{
+  width: fit-content;
+  display: grid;
+  gap:10px;
+}
+
+.camposFormLogin {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.loginElements{
+  width: 100%;
+  height: 3em;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.buttonLoginContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+/*botones de navegacion, paginacion***************************************/
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+
+.pagination-inner {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+}
+
+.pagination-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  z-index: -1;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+

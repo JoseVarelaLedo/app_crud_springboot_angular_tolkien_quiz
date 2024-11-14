@@ -1,0 +1,84 @@
+<h2 class="tituloSeccion">{{'userListTitle' | translate}}</h2>
+
+
+<!-- Botón de colapsar -->
+<button (click)="mostrarFiltro = !mostrarFiltro" class="btn btn-toggle">
+  {{ mostrarFiltro ? ('hideFiltersButton' | translate) : ('showFiltersButton' | translate) }}
+</button>
+
+<!-- Contenedor de filtros que se despliega/colapsa -->
+<div class="contenedorBotonesFiltroYBusqueda" [ngClass]="{ 'colapsado': !mostrarFiltro }">
+  <div class="botoneraFiltro">
+    <label class="btn btn-secondary">
+      <input type="radio" name="rol" value="" (change)="filtrarUsuarios(null)" [checked]="rolSeleccionado === null">
+      {{ 'allRadioButton' | translate }}
+    </label>
+    <label class="btn btn-secondary" [class.active]="rolSeleccionado === 1">
+      <input type="radio" name="rol" (change)="filtrarUsuarios(1)" [checked]="rolSeleccionado === 1">
+      {{ 'administratorRadioButton' | translate }}
+    </label>
+    <label class="btn btn-secondary" [class.active]="rolSeleccionado === 2">
+      <input type="radio" name="rol" (change)="filtrarUsuarios(2)" [checked]="rolSeleccionado === 2">
+      {{ 'bdManagerRadioButton' | translate }}
+    </label>
+    <label class="btn btn-secondary" [class.active]="rolSeleccionado === 3">
+      <input type="radio" name="rol" (change)="filtrarUsuarios(3)" [checked]="rolSeleccionado === 3">
+      {{ 'userRadioButton' | translate }}
+    </label>
+    <div class="busqueda">
+      <input type="text" [(ngModel)]="searchNickname" placeholder="{{ 'nicknameSearchPlaceholder' | translate }}" />
+      <button (click)="buscarUsuarioPorNickname()" class="btn btn-primary">{{ 'search' | translate }}</button>
+    </div>
+    <div class="form-group contenedorFiltroFecha">
+      <label class="etiqueta" for="fechaFiltro">{{ 'datePost' | translate }}</label>
+      <input type="date" id="fechaFiltro" [(ngModel)]="fechaFiltro" />
+      <button (click)="buscarUsuariosPorFechaPost()" class="btn btn-primary">{{ 'search' | translate }}</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="resultadosBusqueda">
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th *ngFor="let columna of columnas" (click)="ordenarPor(columna.campo)" (keydown)="onKeyDown($event, columna)">
+          {{ columna.titulo }}
+          <span *ngIf="sortField === columna.campo">
+            <i *ngIf="sortDirection === 'asc'" class="fas fa-sort-up"></i>
+            <i *ngIf="sortDirection === 'desc'" class="fas fa-sort-down"></i>
+          </span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios | paginate: { itemsPerPage: size, totalItems:totalItems, currentPage: page}">
+        <td class="lineaTabla">{{ usuario.id }}</td>
+        <td class="lineaTabla">{{ usuario.nickname }}</td>
+        <td class="lineaTabla">{{ ocultarPassword(usuario.contrasena) }}</td>
+        <td class="lineaTabla">{{ usuario.nombreRol }}</td>
+        <td class="lineaTabla">{{ usuario.fichaUsuarioId }}</td>
+        <td class="lineaTabla">{{ usuario.fechaRegistro | date: 'dd/MM/yyyy, h:mm a' }}</td>
+
+        <td class="button-group" class="lineaTabla">
+          <button (click)="actualizarUsuario(usuario.id)" class="btn btn-info">{{'editButton' | translate}}</button>
+          <button (click)="eliminarUsuario(usuario.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="totalItems > 0" class="pagination-container">
+  <div class="pagination-inner">
+    <pagination-controls
+      *ngIf="totalItems > 0"
+      (pageChange)="onPageChange($event)"
+      previousLabel="{{'previousPage' | translate}}"
+      nextLabel="{{'nextPage' | translate}}">
+    </pagination-controls>
+  </div>
+</div>

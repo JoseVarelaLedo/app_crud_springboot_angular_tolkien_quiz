@@ -1,0 +1,44 @@
+<h2 class="tituloSeccion">{{'categoryListTitle' | translate}}</h2>
+
+<div class="resultadosBusqueda">
+
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th *ngFor="let columna of columnas" (click)="ordenarPor(columna.campo)" (keydown)="onKeyDown($event, columna)">
+          {{ columna.titulo }}
+          <span *ngIf="sortField === columna.campo">
+            <i *ngIf="sortDirection === 'asc'" class="fas fa-sort-up"></i>
+            <i *ngIf="sortDirection === 'desc'" class="fas fa-sort-down"></i>
+          </span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let categoria of categorias | paginate: { itemsPerPage: size, totalItems:totalItems, currentPage: page}">
+        <td class="lineaTabla">{{ categoria.id }}</td>
+        <td class="lineaTabla">{{ categoria.categoriaDesc }}</td>
+
+        <td class="button-group" class="lineaTabla">
+          <button (click)="actualizarCategoria(categoria.id)" class="btn btn-info">{{'editButton' | translate}}</button>
+          <button (click)="eliminarCategoria(categoria.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="totalItems > 0" class="pagination-container">
+  <div class="pagination-inner">
+    <pagination-controls
+      *ngIf="totalItems > 0"
+      (pageChange)="onPageChange($event)"
+      previousLabel="{{'previousPage' | translate}}"
+      nextLabel="{{'nextPage' | translate}}">
+    </pagination-controls>
+  </div>
+</div>
+
+
+
+

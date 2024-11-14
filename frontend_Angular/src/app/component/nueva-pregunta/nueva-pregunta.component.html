@@ -1,0 +1,119 @@
+<h2 class="tituloSeccion">{{ 'newQuestionFormTitle' | translate }}</h2>
+<div class="col-md-6 offset-md-3">
+
+
+  <form (ngSubmit)="guardarPregunta()">
+    <!-- Campo de texto para la pregunta -->
+    <div class="form-group">
+      <label for="textoPregunta">{{ 'questionTextFormField' | translate }}</label>
+      <input
+        type="text"
+        class="form-control"
+        id="textoPregunta"
+        [(ngModel)]="pregunta.textoPregunta"
+        name="textoPregunta"
+        required
+        minlength="4"
+        maxlength="300"
+        placeholder="{{ 'questionFormPlaceholder' | translate }}"
+      />
+
+    </div>
+
+    <!--selector de categoría -->
+    <div class="form-group" class="selectorCategoria">
+      <label for="categoria">{{ 'idCategoryFormField' | translate }}</label>
+      <select
+        id="categoria"
+        class="form-select"
+        form-select-color="a"
+
+        [(ngModel)]="pregunta.categoria"
+        name="categoria"
+        required
+      >
+        <option *ngFor="let categoria of categorias" [ngValue]="categoria">
+          {{ categoria.categoriaDesc }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Respuestas -->
+    <div class="form-group">
+      <label>{{ 'answerTextFormField' | translate }}</label>
+      <div *ngFor="let respuesta of pregunta.respuestas; let i = index" class="input-group mb-2">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="respuesta.textoRespuesta"
+          name="respuesta{{ i }}"
+          placeholder="{{ 'answerFormPlaceholder' | translate }}"
+          required
+        />
+        <div class="input-group-append">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            [class.active]="respuestaCorrectaIndex === i"
+            (click)="setRespuestaCorrecta(i)"
+          >
+            {{ 'correctAnswer' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'questionTypeFormField' | translate }}</label>
+
+      <!-- Opción de pregunta joya -->
+      <div class="form-check">
+        <input
+          type="radio"
+          class="form-check-input"
+          id="joya"
+          name="tipoPregunta"
+          [value]="'joya'"
+          [(ngModel)]="tipoPregunta"
+          (change)="setTipoPregunta('joya')"
+        />
+        <label class="form-check-label" for="joya">{{ 'jewelQuestionRadioButton' | translate }}</label>
+      </div>
+
+      <!-- Opción de pregunta quesito -->
+      <div class="form-check">
+        <input
+          type="radio"
+          class="form-check-input"
+          id="quesito"
+          name="tipoPregunta"
+          [value]="'quesito'"
+          [(ngModel)]="tipoPregunta"
+          (change)="setTipoPregunta('rondaFinal')"
+        />
+        <label class="form-check-label" for="quesito">{{ 'finalRoundQuestionRadioButton' | translate }}</label>
+      </div>
+
+      <!-- Opción de ninguna -->
+      <div class="form-check">
+        <input
+          type="radio"
+          class="form-check-input"
+          id="ninguno"
+          name="tipoPregunta"
+          [value]="'ninguno'"
+          [(ngModel)]="tipoPregunta"
+          (change)="setTipoPregunta('ninguno')"
+        />
+        <label class="form-check-label" for="ninguno">{{ 'normalQuestionRadioButton' | translate }}</label>
+      </div>
+    </div>
+
+
+    <!-- Botón para Guardar -->
+    <button type="submit" class="btn btn-success" [disabled]="!pregunta.textoPregunta || !pregunta.categoria || !pregunta.respuestas.length">
+      {{ 'saveChangesButton' | translate }}
+    </button>
+    <button (click)="backToCategory()" type="reset" class="btn btn-warning" >{{'back' | translate}}</button>
+  </form>
+</div>

@@ -1,0 +1,82 @@
+
+  <div class="layout">
+    <div class="datosUsuario" *ngIf="isLoggedIn">
+      <p>{{ username }}   _·_   </p>
+      <p>{{ rol }}</p>
+    </div>
+  <button type="submit"  class="btn btn-outline-info logout" (click)="logout()"  *ngIf="isLoggedIn">logout </button>
+
+  <main class="main-content">
+    <header>
+      <div class="content">
+        <div class="title-container text-center">
+          <h1 class="custom-title"> {{ 'applicationTitle' | translate }} </h1>
+        </div>
+
+        <!--Botones de idioma-->
+        <div class="btnLangContainer" (mouseenter)="toggleLanguageMenu(true)" (mouseleave)="toggleLanguageMenu(false)">
+          <!-- Botón del idioma activo (visible) -->
+          <button class="btn btn-outline-dark" (click)="toggleLanguageMenu(true)">
+            <img [src]="activeLangIcon" class="langIcon" alt="{{ activeLangLabel }}">{{ activeLangLabel }}
+          </button>
+
+          <!-- Botones de selección de idioma (ocultos por defecto) -->
+          <div class="dropdown-menu" *ngIf="langMenuVisible">
+            <button *ngFor="let lang of languages" (click)="changeLanguage(lang.code)" class="dropdown-item">
+              <img [src]="lang.icon" class="langIcon" alt="{{ lang.label }}">{{ lang.label }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </header>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <div class="homeLoginButtons">
+    <button class="btn btn-secondary" *ngIf="isLoggedIn">
+      <a routerLink="home" routerLinkActive="active" class="nav-link">{{'home' | translate}}</a>
+    </button>
+    <button class="btn btn-info"  *ngIf="!isLoggedIn && !isLoginPage">
+      <a routerLink="login" routerLinkActive="active" class="nav-link">login</a>
+    </button>
+  </div>
+
+  <aside *ngIf="isSidebarVisible" class="sidebar">
+
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a routerLink="categorias" routerLinkActive="active" class="nav-link">{{'categoryList' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="fichas-usuario" routerLinkActive="active" class="nav-link">{{'userFileList' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="preguntas" routerLinkActive="active" class="nav-link">{{'questionList' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="usuarios" routerLinkActive="active" class="nav-link">{{'userList' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="nueva-categoria" routerLinkActive="active" class="nav-link">{{'newCategory' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="nueva-ficha-usuario" routerLinkActive="active" class="nav-link">{{'newUserFile' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="nueva-pregunta" routerLinkActive="active" class="nav-link">{{'newQuestion' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="nuevo-usuario" routerLinkActive="active" class="nav-link">{{'newUser' | translate}}</a>
+      </li>
+    </ul>
+
+  </aside>
+
+</div>
+
+<footer class="app-footer">
+  <p>© 2024 Tolkien Quiz.</p>
+</footer>

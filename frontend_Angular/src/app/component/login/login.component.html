@@ -1,0 +1,31 @@
+<h2 class="tituloSeccion">Login</h2>
+
+
+<div class="loginPage">
+
+  <form class="formLogin" (ngSubmit)="login()">
+    <div class="camposFormLogin">
+      <label class="etiqueta"for="username">{{ 'nicknameFormField' | translate }}</label>
+      <input class="loginElements" type="text" id="username" [(ngModel)]="username" name="username" required autocomplete="username">
+    </div>
+    <div class="camposFormLogin">
+      <label class="etiqueta" for="password">Password:</label>
+      <input
+          class="loginElements"
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          autocomplete="current-password"
+          >
+    </div>
+    <div class="buttonLoginContainer">
+      <button type="submit" class="btn btn-secondary">Login</button>
+      <button (click)="goToRegister()" class="btn btn-info">
+        <a routerLink="nuevo-usuario" routerLinkActive="active" class="nav-link">{{'register' | translate}}</a>
+      </button>
+    </div>
+    <div class="errorMessage" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </form>
+</div>

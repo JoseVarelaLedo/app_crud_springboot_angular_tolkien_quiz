@@ -1,0 +1,212 @@
+<h2 class="tituloSeccion">{{ 'editUserFileTitle' | translate }}</h2>
+<div class="col-md-6 offset-md-3">
+
+  <form (ngSubmit)="onSubmit()" #updateFichaUsuarioForm="ngForm">
+
+    <div class="form-group">
+      <label for="nombreUsuario">{{ 'nameFormField' | translate }} </label>
+        <input
+          type="text"
+          class="form-control"
+          id="nombreUsuario"
+          [(ngModel)]="fichaUsuario.nombre"
+          name="nombreUsuario"
+          required
+          minlength="4"
+          maxlength="200"
+          placeholder="{{ 'nameFormPlaceholder' | translate }}"
+          #nombreUsuario="ngModel"
+        />
+        <div class="alert alert-danger" *ngIf="nombreUsuario.invalid && (nombreUsuario.dirty || nombreUsuario.touched)">
+          <div *ngIf="nombreUsuario.errors?.['required']">
+            {{ 'emptyNameFormError' | translate }}
+          </div>
+          <div *ngIf="nombreUsuario.errors?.['minlength']">
+            {{ 'minLengthNameFormError' | translate: { minLength: nombreUsuario.errors?.['minlength']?.requiredLength } }}
+          </div>
+          <div *ngIf="nombreUsuario.errors?.['maxlength']">
+            {{ 'maxLengthNameFormError' | translate: { maxLength: nombreUsuario.errors?.['maxlength']?.requiredLength } }}
+          </div>
+      </div>
+
+      <label for="apellidosUsuario">{{ 'surnameFormField' | translate }} </label>
+        <input
+          type="text"
+          class="form-control"
+          id="apellidosUsuario"
+          [(ngModel)]="fichaUsuario.apellidos"
+          name="apellidosUsuario"
+          required
+          minlength="4"
+          maxlength="50"
+          placeholder="{{ 'surnameFormPlaceholder' | translate }}"
+          #apellidosUsuario="ngModel"
+        />
+        <div class="alert alert-danger" *ngIf="apellidosUsuario.invalid && (apellidosUsuario.dirty || apellidosUsuario.touched)">
+          <div *ngIf="apellidosUsuario.errors?.['required']">
+            {{ 'emptySurnameFormError' | translate }}
+          </div>
+          <div *ngIf="apellidosUsuario.errors?.['minlength']">
+            {{ 'minLengthSurnameFormError' | translate: { minLength: apellidosUsuario.errors?.['minlength']?.requiredLength } }}
+          </div>
+          <div *ngIf="apellidosUsuario.errors?.['maxlength']">
+            {{ 'maxLengthSurnameFormError' | translate: { maxLength: apellidosUsuario.errors?.['maxlength']?.requiredLength } }}
+          </div>
+        </div>
+
+        <label for="telefono">{{ 'phoneFormField' | translate }} </label>
+      <input
+        type="text"
+        class="form-control"
+        id="telefono"
+        [(ngModel)]="fichaUsuario.telefono"
+        name="telefono"
+        pattern="^\d{9}$"
+        required
+        minlength="9"
+        maxlength="9"
+        placeholder="{{ 'phoneFormPlaceholder' | translate }}"
+        #telefono="ngModel"
+      />
+      <div class="alert alert-danger" *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)">
+        <div *ngIf="telefono.errors?.['required']">
+          {{ 'emptyPhoneFormError' | translate }}
+        </div>
+        <div *ngIf="telefono.errors?.['pattern']">
+          {{ 'patternPhoneFormError' | translate: { pattern: '9' } }}
+        </div>
+        <div *ngIf="telefono.errors?.['minlength']">
+          {{ 'minLengthPhoneFormError' | translate: { minLength: telefono.errors?.['minlength']?.requiredLength } }}
+        </div>
+        <div *ngIf="telefono.errors?.['maxlength']">
+          {{ 'maxLengthPhoneFormError' | translate: { maxLength: telefono.errors?.['maxlength']?.requiredLength } }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="direccionUsuario">{{ 'addressFormField' | translate }} </label>
+      <input
+        type="text"
+        class="form-control"
+        id="direccionUsuario"
+        [(ngModel)]="fichaUsuario.direccion"
+        name="direccionUsuario"
+        required
+        minlength="5"
+        maxlength="50"
+        placeholder="{{ 'addressFormPlaceholder' | translate }}"
+        #direccionUsuario="ngModel"
+      />
+      <div class="alert alert-danger" *ngIf="direccionUsuario.invalid && (direccionUsuario.dirty || direccionUsuario.touched)">
+        <div *ngIf="direccionUsuario.errors?.['required']">
+          {{ 'emptyAddressFormError' | translate }}
+        </div>
+        <div *ngIf="direccionUsuario.errors?.['minlength']">
+          {{ 'minLengthAddressFormError' | translate: { minLength: direccionUsuario.errors?.['minlength']?.requiredLength } }}
+        </div>
+        <div *ngIf="direccionUsuario.errors?.['maxlength']">
+          {{ 'maxLengthAddressFormError' | translate: { maxLength: direccionUsuario.errors?.['maxlength']?.requiredLength } }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="correoElectronico">{{ 'emailFormField' | translate }} </label>
+      <input
+        type="correoElectronico"
+        class="form-control"
+        id="correoElectronico"
+        [(ngModel)]="fichaUsuario.correoElectronico"
+        name="correoElectronico"
+        pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}"
+        required
+        placeholder="{{ 'emailFormPlaceholder' | translate }}"
+        #correoElectronico="ngModel"
+      />
+      <div class="alert alert-danger" *ngIf="correoElectronico.invalid && (correoElectronico.dirty || correoElectronico.touched)">
+        <div *ngIf="correoElectronico.errors?.['required']">
+          {{ 'emptyMailFormError' | translate }}
+        </div>
+        <div *ngIf="correoElectronico.errors?.['pattern']">
+          {{ 'invalidMailFormError' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nickName">{{ 'nicknameFormField' | translate }} </label>
+      <input
+        type="text"
+        class="form-control"
+        id="nickName"
+        [(ngModel)]="fichaUsuario.nickname"
+        name="nickName"
+        required
+        minlength="5"
+        maxlength="20"
+        placeholder="{{ 'nicknameFormPlaceholder' | translate }}"
+        #nickName="ngModel"
+      />
+      <div class="alert alert-danger" *ngIf="nickName.invalid && (nickName.dirty || nickName.touched)">
+        <div *ngIf="nickName.errors?.['required']">
+          {{ 'emptyNicknameFormError' | translate }}
+        </div>
+        <div *ngIf="nickName.errors?.['minlength']">
+          {{ 'minLengthNicknameFormError' | translate: { minLength: nickName.errors?.['minlength']?.requiredLength } }}
+        </div>
+        <div *ngIf="nickName.errors?.['maxlength']">
+          {{ 'maxLengthNicknameFormError' | translate: { maxLength: nickName.errors?.['maxlength']?.requiredLength } }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaNacimiento">{{ 'birthdateFormField' | translate }} </label>
+      <input
+        type="date"
+        class="form-control"
+        id="fechaNacimiento"
+        [(ngModel)]="fichaUsuario.fechaNacimiento"
+        name="fechaNacimiento"
+        placeholder="{{ 'birthdateFormPlaceholder' | translate }}"
+        #fechaNacimiento="ngModel"
+      />
+      <div class="alert alert-danger" *ngIf="fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)">
+        <div *ngIf="fechaNacimiento.errors?.['required']">
+          {{ 'requiredFieldError' | translate }}
+        </div>
+      </div>
+    </div>
+
+      <label for="password">{{ 'passwordFormField' | translate }} </label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          [(ngModel)]="fichaUsuario.password"
+          name="password"
+          [required]="!fichaUsuario.password"
+          minlength="4"
+          maxlength="200"
+          placeholder="{{ 'passwordFormPlaceholder' | translate }}"
+          #password="ngModel"
+        />
+        <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+          <div *ngIf="password.errors?.['required']">
+            {{ 'requiredPasswordError' | translate }}
+          </div>
+          <div *ngIf="password.errors?.['minlength']">
+            {{ 'minLengthPasswordError' | translate: { minLength: password.errors?.['minlength']?.requiredLength } }}
+          </div>
+          <div *ngIf="password.errors?.['maxlength']">
+            {{ 'maxLengthPasswordError' | translate: { maxLength: password.errors?.['maxlength']?.requiredLength } }}
+          </div>
+        </div>
+
+
+    <button class="btn btn-success" [disabled]="!updateFichaUsuarioForm.form.valid" type="submit">{{ 'saveChangesButton' | translate }}</button>
+    <button (click)="backToCategory()" type="reset" class="btn btn-warning" >{{'back' | translate}}</button>
+  </form>
+</div>
+

@@ -1,0 +1,88 @@
+<h2 class="tituloSeccion">{{ 'editQuestionTitle' | translate }}</h2>
+
+<div class="col-md-6 offset-md-3">
+
+  <form (ngSubmit)="onSubmit()" #actualizarPreguntaForm="ngForm">
+
+         <!-- Selector de categoría -->
+         <div class="form-group" class="selectorCategoria">
+          <label for="categoria">{{ 'idCategoryFormField' | translate }}</label>
+          <select
+            id="categoria"
+            class="form-select"
+            form-select-color="a"
+
+            [(ngModel)]="pregunta.categoria"
+            name="categoria"
+            required
+          >
+            <option *ngFor="let categoria of categorias" [ngValue]="categoria">
+              {{ categoria.categoriaDesc }}
+            </option>
+          </select>
+        </div>
+
+
+      <!-- Campo de Texto de la Pregunta -->
+      <label for="textoPregunta">{{ 'questionTextFormField' | translate }}</label>
+      <input type="text" class="form-control" id="textoPregunta" [(ngModel)]="pregunta.textoPregunta"
+             name="textoPregunta" required minlength="4" maxlength="300"
+             placeholder="{{ 'questionFormPlaceholder' | translate }}" #textoPregunta="ngModel" />
+      <div class="alert alert-danger" *ngIf="textoPregunta.invalid && (textoPregunta.dirty || textoPregunta.touched)">
+        <div *ngIf="textoPregunta.errors?.['required']">{{ 'emptyQuestionTextFormError' | translate }}</div>
+      </div>
+
+      <!-- Lista de Respuestas -->
+      <label for="textoRespuesta">{{ 'answerTextFormField' | translate }}</label>
+      <div *ngFor="let respuesta of pregunta.respuestas; let i = index" class="input-group mb-2">
+        <input type="text" class="form-control" id="textoRespuesta"
+               [(ngModel)]="pregunta.respuestas[i].textoRespuesta" name="textoRespuesta{{i}}"
+               required minlength="4" maxlength="300"
+               placeholder="{{ 'answerFormPlaceholder' | translate }}" #textoRespuesta="ngModel" />
+       <!-- Botón para marcar como respuesta correcta -->
+       <div class="input-group-append">
+        <button type="button" class="btn btn-outline-primary"
+                [class.active]="respuestaCorrectaIndex === i"
+                (click)="setRespuestaCorrecta(i)">
+          {{ 'correctAnswer' | translate }}
+        </button>
+      </div>
+        <div class="alert alert-danger" *ngIf="textoRespuesta.invalid && (textoRespuesta.dirty || textoRespuesta.touched)">
+          <div *ngIf="textoRespuesta.errors?.['required']">{{ 'emptyAnswerTextFormError' | translate }}</div>
+        </div>
+      </div>
+
+     <!--Botones radiobutton para cambiar el tipo de pregunta-->
+     <div>
+      <label>
+        <input type="radio"
+               name="tipoPregunta"
+               value="quesito"
+               [(ngModel)]="tipoPregunta"
+               (change)="updatePreguntaType('quesito')">
+               {{"jewelQuestionRadioButton" | translate}}
+      </label>
+      <label>
+        <input type="radio"
+               name="tipoPregunta"
+               value="rondaFinal"
+               [(ngModel)]="tipoPregunta"
+               (change)="updatePreguntaType('rondaFinal')">
+               {{"finalRoundQuestionRadioButton" | translate}}
+      </label>
+      <label>
+        <input type="radio"
+               name="tipoPregunta"
+               value="normal"
+               [(ngModel)]="tipoPregunta"
+               (change)="updatePreguntaType('normal')">
+               {{"normalQuestionRadioButton" | translate}}
+      </label>
+    </div>
+
+
+
+    <button class="btn btn-success" [disabled]="!actualizarPreguntaForm.form.valid" type="submit">{{ 'saveChangesButton' | translate }}</button>
+    <button (click)="backToCategory()" type="reset" class="btn btn-warning" >{{'back' | translate}}</button>
+  </form>
+</div>

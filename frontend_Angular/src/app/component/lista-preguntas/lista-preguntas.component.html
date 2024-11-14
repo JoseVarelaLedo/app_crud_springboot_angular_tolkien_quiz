@@ -1,0 +1,112 @@
+<h2 class="tituloSeccion">{{'questionListTitle' | translate}}</h2>
+
+<!-- Botón de colapsar -->
+<button (click)="mostrarFiltro = !mostrarFiltro" class="btn btn-toggle">
+  {{ mostrarFiltro ? ('hideFiltersButton' | translate) : ('showFiltersButton' | translate) }}
+</button>
+
+
+<div class="contenedorBotonesFiltroYBusqueda" [ngClass]="{ 'colapsado': !mostrarFiltro }">
+  <div class="botoneraFiltro">
+    <!--DESPLEGABLE PARA SELECCIONAR CATEGORIA Y FILTRAR-->
+
+    <div class="busqueda">
+      <label class="etiqueta" for="categoria">{{'idCategoryFormField' | translate}}</label>
+      <select id="categoria" class="desplegable" [(ngModel)]="idCategoriaSeleccionada"
+        (change)="obtenerPreguntasFiltradas()">
+        <option value="0">{{'allCategories' | translate}}</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.categoriaDesc }}</option>
+      </select>
+    </div>
+
+    <!--BOTONES PARA SELECCIONAR PREGUNTAS QUESITO Y RONDA FINAL-->
+
+    <div>
+      <label class="btn btn-secondary">
+        <input type="radio" name="tipoPregunta" (change)="filtrarPorTipo('quesito')" />
+        {{'jewelQuestionRadioButton'| translate}}
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="tipoPregunta" (change)="filtrarPorTipo('rondaFinal')" />
+        {{'finalRoundQuestionRadioButton'| translate}}
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="tipoPregunta" (change)="resetearFiltro()" />
+        {{'allCategories'| translate}}
+      </label>
+    </div>
+
+    <!--CUADRO BÚSQUEDA-->
+
+    <div class="busqueda">
+      <label class="etiqueta" for="filtro"> {{'search' | translate}}</label>
+      <input type="text" [(ngModel)]="filtro" (input)="filtrarPreguntas()"
+        placeholder="{{'searchPlaceholder' | translate}}" />
+    </div>
+
+  </div>
+</div>
+
+<div class="resultadosBusqueda">
+  <!--TABLA CON LOS RESULTADOS DE BÚSQUEDA-->
+
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th *ngFor="let columna of columnas" (click)="ordenarPor(columna.campo)" (keydown)="onKeyDown($event, columna)">
+          {{ columna.titulo }}
+          <span *ngIf="sortField === columna.campo">
+            <i *ngIf="sortDirection === 'asc'" class="fas fa-sort-up"></i>
+            <i *ngIf="sortDirection === 'desc'" class="fas fa-sort-down"></i>
+          </span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr
+        *ngFor="let pregunta of preguntasFiltradas | paginate: { itemsPerPage: size, totalItems:totalItems, currentPage: page}">
+        <td class="lineaTabla">{{ pregunta.id }}</td>
+        <td class="lineaTabla">{{ pregunta.categoria.categoriaDesc }}</td>
+        <td class="lineaTabla">{{ pregunta.textoPregunta }}</td>
+        <td class="lineaTabla" *ngIf="pregunta.respuestas && pregunta.respuestas.length > 1">
+          <select class="form-select" title="respuestas">
+            <option *ngFor="let respuesta of pregunta.respuestas">
+              {{ respuesta.textoRespuesta }} -
+              {{ respuesta.esRespuestaCorrecta ? 'Correcta' : 'Incorrecta' }}
+            </option>
+          </select>
+        </td>
+
+        <!-- Mostrar en formato de texto si hay solo una respuesta -->
+        <td *ngIf="pregunta.respuestas && pregunta.respuestas.length === 1">
+          {{ pregunta.respuestas[0].textoRespuesta }} -
+          {{ pregunta.respuestas[0].esRespuestaCorrecta ? 'Correcta' : 'Incorrecta' }}
+        </td>
+        <td>{{ pregunta.esPreguntaQuesito ? 'Si': 'No' }}</td>
+        <td>{{ pregunta.esPreguntaRondaFinal ? 'Si': 'No'}}</td>
+
+        <td class="lineaTabla" class="button-group">
+          <button (click)="actualizarPregunta(pregunta.id)" class="btn btn-info">{{'editButton' | translate}}</button>
+          <button (click)="eliminarPregunta(pregunta.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>
+
+<div *ngIf="totalItems > 0" class="pagination-container">
+  <div class="pagination-inner">
+    <pagination-controls
+      *ngIf="totalItems > 0"
+      (pageChange)="onPageChange($event)"
+      previousLabel="{{'previousPage' | translate}}"
+      nextLabel="{{'nextPage' | translate}}">
+    </pagination-controls>
+  </div>
+</div>
+

@@ -1,0 +1,57 @@
+<h2 class="tituloSeccion">{{'userFileListTitle' | translate}}</h2>
+
+
+<div class="resultadosBusqueda">
+
+  <div class="busqueda">
+    <label class="etiqueta" for="filtro"> {{'search' | translate}}</label>
+    <input type="text" [(ngModel)]="filtro" (input)="obtenerFichas()" placeholder="{{'searchPlaceholder' | translate}}" />
+  </div>
+
+
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th *ngFor="let columna of columnas" (click)="ordenarPor(columna.campo)" (keydown)="onKeyDown($event, columna)">
+        {{ columna.titulo }}
+        <span *ngIf="sortField === columna.campo">
+          <i *ngIf="sortDirection === 'asc'" class="fas fa-sort-up"></i>
+          <i *ngIf="sortDirection === 'desc'" class="fas fa-sort-down"></i>
+        </span>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr  *ngFor="let fichaUsuario of fichasFiltradas | paginate: { itemsPerPage: size, totalItems:totalItems, currentPage: page} ">
+      <td class="lineaTabla">{{ fichaUsuario.id }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.nombre }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.apellidos }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.telefono }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.correoElectronico }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.direccion }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.nickname }}</td>
+      <td class="lineaTabla">{{ ocultarPassword(fichaUsuario.password) }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.score}}</td>
+      <td class="lineaTabla">{{ fichaUsuario.fechaNacimiento }}</td>
+      <td class="lineaTabla">{{ fichaUsuario.fechaRegistro | date: 'dd/MM/yyyy, h:mm a' }}</td>
+      <td class="button-group" class="lineaTabla">
+        <button (click)="actualizarFichaUsuario(fichaUsuario.id)" class="btn btn-info">{{'editButton' | translate}}</button>
+        <button (click)="eliminarFichaUsuario(fichaUsuario.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div *ngIf="totalItems > 0" class="pagination-container">
+  <div class="pagination-inner">
+    <pagination-controls
+      *ngIf="totalItems > 0"
+      (pageChange)="onPageChange($event)"
+      previousLabel="{{'previousPage' | translate}}"
+      nextLabel="{{'nextPage' | translate}}">
+    </pagination-controls>
+  </div>
+</div>
+

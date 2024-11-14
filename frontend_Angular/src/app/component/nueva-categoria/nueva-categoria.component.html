@@ -1,0 +1,29 @@
+<h2 class="tituloSeccion">{{ 'newCategoryFormTitle' | translate }}</h2>
+<div class="col-md-6 offset-md-3">
+
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+    <div class="form-group">
+      <label for="categoriaDesc">{{ 'categoryFormField' | translate }} </label>
+      <input type="text" class="form-control" id="categoriaDesc" [(ngModel)]="categoria.categoriaDesc"
+        name="categoriaDesc" required minlength="4" maxlength="30"
+        placeholder="{{ 'categoryFormPlaceholder' | translate }}" #categoriaDesc="ngModel" />
+      <div class="alert alert-danger" *ngIf="categoriaDesc.invalid && (categoriaDesc.dirty || categoriaDesc.touched)">
+        <div *ngIf="categoriaDesc.errors?.['required']">
+          {{ 'emptyCategoryDescFormError' | translate }}
+        </div>
+        <div *ngIf="categoriaDesc.errors?.['minlength']">
+          {{ 'minLengthCategoryDescFormError' | translate: { minLength:
+          categoriaDesc.errors?.['minlength']?.requiredLength } }}
+        </div>
+        <div *ngIf="categoriaDesc.errors?.['maxlength']">
+          {{ 'maxLengthCategoryDescFormError' | translate: { maxLength:
+          categoriaDesc.errors?.['maxlength']?.requiredLength } }}
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-success" [disabled]="!categoryForm.form.valid" type="submit">{{ 'saveChangesButton' |
+      translate }}</button>
+      <button (click)="backToCategory()" type="reset" class="btn btn-warning" >{{'back' | translate}}</button>
+  </form>
+</div>

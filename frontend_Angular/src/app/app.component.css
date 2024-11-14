@@ -1,0 +1,4 @@
+:host {
+  transform: scale(var(--zoom-level));
+  transform-origin: top left;
+}

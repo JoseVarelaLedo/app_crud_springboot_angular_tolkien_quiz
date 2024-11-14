@@ -1,0 +1,44 @@
+<h2 class="tituloSeccion">{{'userDetailsTitle' | translate}}</h2>
+<div *ngIf="usuario">
+
+</div>
+<div *ngIf="!usuario">
+  <p class="tituloSeccion">{{'userNotFoundTitle' | translate}}</p>
+</div>
+
+<div class="resultadosBusqueda">
+
+
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th *ngFor="let columna of columnas">{{ columna.titulo }}</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr >
+      <td class="lineaTabla">{{ usuario?.id }}</td>
+      <td class="lineaTabla">{{ usuario?.nickname }}</td>
+      <td class="lineaTabla" *ngIf="usuario">{{ ocultarPassword(usuario.contrasena) }}
+        <button (click)="toggleMostrarPassword()" class="btn btn-sm">
+          {{ mostrarPassword ? 'Ocultar' : 'Mostrar' }}
+        </button>
+      </td>
+      <td class="lineaTabla">{{ usuario?.nombreRol }}</td>
+      <td class="lineaTabla">{{ usuario?.fichaUsuarioId }}</td>
+      <td class="lineaTabla">{{ usuario?.fechaRegistro | date: 'dd/MM/yyyy, h:mm a' }}</td>
+      <td class="button-group" class="lineaTabla">
+        <button *ngIf="usuario" (click)="actualizarUsuario(usuario.id )" class="btn btn-info">{{'editButton' | translate}}</button>
+        <button *ngIf="usuario" (click)="eliminarUsuario(usuario.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+        <button (click)="backToCategory()" type="reset" class="btn btn-warning" >{{'back' | translate}}</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+</div>
