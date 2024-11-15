@@ -107,23 +107,6 @@ export abstract class BaseComponent {
       confirmButtonText: confirmButtonText
     });
   }
-
-  // Método para cambiar a la siguiente página
-  public nextPage(): void {
-    if (this.page + 1 < this.totalPages) {
-      this.page++;
-      this.obtenerDatos();  // Llamada a método genérico
-    }
-  }
-
-  // Método para cambiar a la página anterior
-  public prevPage(): void {
-    if (this.page > 0) {
-      this.page--;
-      this.obtenerDatos();  // Llamada a método genérico
-    }
-  }
-
   // Método para ordenar por un campo específico
   public ordenarPor(campo: string): void {
     this.sortField = campo;

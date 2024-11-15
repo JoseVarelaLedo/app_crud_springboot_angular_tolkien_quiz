@@ -46,27 +46,18 @@ export class AuthService {
     );
   }
 
-  // logout(): void {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('role');
-  //   localStorage.removeItem('username');
-  //   this.loggedInSubject.next(false);
-  //   this.router.navigate(['/login']);
-  // }
-
   logout(): void {
     const token = localStorage.getItem('token');
     if (token) {
       const headers = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Envía el token al backend
+        'Authorization': `Bearer ${token}` // envía el token al backend
       });
 
       this.httpClient.post('http://localhost:9666/auth/logout', {}, { headers })
         .subscribe({
           next: () => {
-            // Una vez que el backend confirma la invalidación, borra los datos en localStorage
-            localStorage.removeItem('token');
+            localStorage.removeItem('token');    // una vez que el backend confirma la invalidación, borra los datos en localStorage
             localStorage.removeItem('role');
             localStorage.removeItem('username');
             this.loggedInSubject.next(false);
@@ -74,8 +65,7 @@ export class AuthService {
           },
           error: (err) => {
             console.error('Error en la invalidación del token:', err);
-            // Si ocurre un error en la invalidación, puedes seguir eliminando los datos locales
-            localStorage.removeItem('token');
+            localStorage.removeItem('token');    // si ocurre un error en la invalidación, puedes seguir eliminando los datos locales
             localStorage.removeItem('role');
             localStorage.removeItem('username');
             this.loggedInSubject.next(false);
@@ -83,8 +73,7 @@ export class AuthService {
           }
         });
     } else {
-      // Si no hay token, realiza el logout directamente
-      localStorage.removeItem('role');
+      localStorage.removeItem('role');          // si no hay token, realiza el logout directamente
       localStorage.removeItem('username');
       this.loggedInSubject.next(false);
       this.router.navigate(['/login']);

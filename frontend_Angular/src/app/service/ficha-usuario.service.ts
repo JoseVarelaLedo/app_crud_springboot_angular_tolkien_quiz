@@ -34,8 +34,7 @@ export class FichaUsuarioService {
       .set('campoOrdenacion', sortField)
       .set('direccionOrdenacion', sortDirection);
 
-    // así agregamos el filtro a los parámetros si está presente
-    if (filtro) {
+    if (filtro) {                                     // así agregamos el filtro a los parámetros si está presente
       params = params.set('filtro', filtro);
     }
 

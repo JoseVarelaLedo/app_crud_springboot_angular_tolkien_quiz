@@ -22,13 +22,13 @@ import { BaseComponent } from '../../base.component';
 export class ListaPreguntasComponent extends BaseComponent implements OnInit, OnDestroy {
 
   preguntas: Pregunta[] = [];
-  preguntasFiltradas: Pregunta[] = []; // necesitamos esta variable adicional ara almacenar los resultados filtrados
+  preguntasFiltradas: Pregunta[] = [];                                // necesitamos esta variable adicional ara almacenar los resultados filtrados
   categorias: Categoria[] = [];
   idCategoriaSeleccionada: number = 0;
   columnas: any[] = [];
   totalElements = 0;
-  filtro: string = ''; // necesitamos esta variable para almacenar el texto del filtro
-  langChangeSubscription: Subscription = new Subscription(); // así estamos siempre suscritos a los cambios de idioma en tiempo real
+  filtro: string = '';                                                // necesitamos esta variable para almacenar el texto del filtro
+  langChangeSubscription: Subscription = new Subscription();          // así estamos siempre suscritos a los cambios de idioma en tiempo real
   mostrarFiltro = false;
 
 
@@ -64,7 +64,7 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
 
   // creamos un método público, accesible desde el HTML, para cambiar categorías, ya que los específicos para ello son privados
   obtenerPreguntasFiltradas() {
-    this.page = 1; // reiniciar a la primera página al cambiar de categoría
+    this.page = 1;                                        // reiniciar a la primera página al cambiar de categoría
     if (Number(this.idCategoriaSeleccionada) === 0) {
       this.obtenerDatos();
     } else {
@@ -98,7 +98,7 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
       {
         next: (response: any) => {
           this.preguntas = response.content;
-          this.preguntasFiltradas = this.preguntas; // actualizamos las preguntas filtradas
+          this.preguntasFiltradas = this.preguntas;               // actualizamos las preguntas filtradas
           this.totalPages = response.totalPages;
           this.totalItems = response.totalElements;
         },
@@ -131,15 +131,13 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
     // this.mostrarFiltro = false;
   }
 
-  // resetea el filtro y muestra todas las preguntas
-  resetearFiltro() {
+  resetearFiltro() {                           // resetea el filtro y muestra todas las preguntas
     this.preguntasFiltradas = this.preguntas; // vuelve a mostrar todas las preguntas
   }
 
   actualizarPregunta(id: number) {
     this.router.navigate(['/actualizar-pregunta/id', id]);
-    // Para refrescar la lista de contactos después de eliminar
-    this.obtenerDatos();
+    this.obtenerDatos();           // imprescindible refrescar la lista después de eliminar
   }
 
   eliminarPregunta(id: number): void {
@@ -164,14 +162,6 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
     ];
   }
 
-  override nextPage() {
-    super.nextPage();  // Usando el método heredado de BaseComponent
-  }
-
-  override prevPage() {
-    super.prevPage();  // Usando el método heredado de BaseComponent
-  }
-
   override ordenarPor(campo: string) {
     super.ordenarPor(campo);
     this.obtenerDatos();
@@ -180,5 +170,4 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
   protected override navigateAfterDelete(): void {
     this.router.navigate(['/preguntas']);
   }
-
 }

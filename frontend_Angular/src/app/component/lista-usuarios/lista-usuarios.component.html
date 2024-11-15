@@ -26,7 +26,7 @@
       {{ 'userRadioButton' | translate }}
     </label>
     <div class="busqueda">
-      <input type="text" [(ngModel)]="searchNickname" placeholder="{{ 'nicknameSearchPlaceholder' | translate }}" />
+      <input type="text" [(ngModel)]="searchNickname" (keydown.enter)="buscarUsuarioPorNickname()"  placeholder="{{ 'nicknameSearchPlaceholder' | translate }}" />
       <button (click)="buscarUsuarioPorNickname()" class="btn btn-primary">{{ 'search' | translate }}</button>
     </div>
     <div class="form-group contenedorFiltroFecha">

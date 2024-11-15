@@ -28,17 +28,14 @@ export class LoginComponent extends BaseComponent{
   login() {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
-        // Manejar la respuesta (por ejemplo, guardar el token en el almacenamiento local)
-        console.log('Token recibido del backend:', response.token);
         if (response.token) {
-          localStorage.setItem('token', response.token);  // Aquí guardas el token
+          localStorage.setItem('token', response.token);  // almacenamiento del token en el localStorage
           console.log('Token guardado:', response.token);
         }
-        localStorage.setItem('role', response.roles[0]);
-        localStorage.setItem('username', this.username);
+        localStorage.setItem('role', response.roles[0]);  // ídem roles
+        localStorage.setItem('username', this.username);  // ídem username / nickname
         this.router.navigate(['/home']);
 
-        console.log('Login exitoso', response);
         this.lanzarSweetAlertSimplificado(
           'swalSuccess',
           'swalLoginSuccess',
@@ -62,9 +59,7 @@ export class LoginComponent extends BaseComponent{
   }
 
   goToRegister() {
-    console.log ('yendo a registro');
     this.router.navigate(['/nueva-ficha-usuario']);
-    console.log ('salimos de login component');
   }
 
   protected override obtenerDatos() {
@@ -74,5 +69,4 @@ export class LoginComponent extends BaseComponent{
   protected override navigateAfterDelete(): void {
       console.log ("empty");
   }
-
 }

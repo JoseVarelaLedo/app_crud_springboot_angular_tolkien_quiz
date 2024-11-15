@@ -88,8 +88,6 @@ export class ListaCategoriasComponent extends BaseComponent implements OnInit, O
     ];
   }
 
-
-
   override ordenarPor(campo: string) {
     super.ordenarPor(campo);
     this.obtenerDatos();
@@ -99,5 +97,3 @@ export class ListaCategoriasComponent extends BaseComponent implements OnInit, O
     this.router.navigate(['/categorias']);
   }
 }
-
-

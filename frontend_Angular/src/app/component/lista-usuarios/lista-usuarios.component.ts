@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UsuarioService } from './../../service/usuario.service';
@@ -38,16 +38,14 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
   }
 
   ngOnInit() {
-    // Suscribirse a los cambios de idioma
-    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
+    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {    // suscribirse a los cambios de idioma
       this.traducirColumnas();
     });
     this.traducirColumnas();
     this.obtenerDatos();
   }
 
-  ngOnDestroy() {
-    // Desuscribirse de los cambios de idioma cuando el componente se destruye
+  ngOnDestroy() {                                     // desuscribirse de los cambios de idioma cuando el componente se destruye
     if (this.langChangeSubscription) {
       this.langChangeSubscription.unsubscribe();
     }
@@ -69,18 +67,14 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
 
   actualizarUsuario(id: number) {
     this.router.navigate(['/actualizar-usuario/id', id]);
-    // Para refrescar la lista de contactos después de eliminar
     this.obtenerDatos();
   }
 
-  // Método para alternar los roles seleccionados
-  filtrarUsuarios(rolId: number | null): void {
-    this.rolSeleccionado = rolId;  // Actualiza el rol seleccionado
+  filtrarUsuarios(rolId: number | null): void {                             // método para alternar los roles seleccionados
+    this.rolSeleccionado = rolId;                                           // actualizar el rol seleccionado
     if (rolId === null) {
-      // Si no hay rol seleccionado, muestra todos los usuarios
-      this.obtenerDatos();
-    } else {
-      // Filtrar por el rol seleccionado
+      this.obtenerDatos();                                                  // si no hay rol seleccionado, muestra todos los usuarios
+    } else {                                                                // filtrar por el rol seleccionado
       this.usuarioService.obtenerUsuariosPorRol(this.page, this.size, this.sortField, this.sortDirection, rolId).subscribe((response: any) => {
         this.usuarios = response.content;
         this.totalPages = response.totalPages;
@@ -96,7 +90,6 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
           next: response => {
             this.usuarios = response.content;
             this.totalPages = response.totalPages;
-
           },
           error: () => {
             super.lanzarSweetAlert({
@@ -125,7 +118,7 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
     this.usuarioService.buscarUsuarioPorNickname(this.searchNickname).subscribe(
       {
         next: (response: Usuario) => {
-          this.router.navigate(['/usuario', response.nickname]); // Redirigir al detalle del usuario
+          this.router.navigate(['/usuario', response.nickname]); // redirigir al detalle del usuario
         },
         error:
           () => {
@@ -136,7 +129,7 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
               botonTextKey: 'swalAccept',
               cancelar: false,
             });
-            this.searchResults = []; // Vaciar los resultados en caso de error
+            this.searchResults = []; // vaciar los resultados en caso de error
           }
       }
     );
@@ -165,15 +158,7 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
   }
 
   ocultarPassword(password: string): string {
-    return '●'.repeat(7); // Muestra 7 caracteres especiales
-  }
-
-  override nextPage() {
-    super.nextPage();
-  }
-
-  override prevPage() {
-    super.prevPage();
+    return '●'.repeat(7); // muestra 7 puntos para ocultar contraseña
   }
 
   override ordenarPor(campo: string) {

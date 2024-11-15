@@ -44,17 +44,15 @@ export class DetalleUsuarioComponent extends BaseComponent implements OnInit {
   }
 
   eliminarUsuario(id: number): void {
-    // Crea un arreglo temporal que contenga solo el usuario a eliminar.
-    const entidadSimulada = this.usuario ? [this.usuario] : [];
+    const entidadSimulada = this.usuario ? [this.usuario] : [];   // array temporal que contenga sólo el usuario a eliminar.
 
-    // Llama a eliminarEntidad pasando el arreglo simulado y los parámetros necesarios.
-    this.eliminarEntidad(
+    this.eliminarEntidad(  // llamada a eliminarEntidad pasando el array simulado y los parámetros necesarios.
       id,
       entidadSimulada,
-      (id) => this.usuarioService.eliminarUsuario(id), // Método del servicio
-      'swalEraseUser',           // Clave del texto del SweetAlert de confirmación
-      'swalSure',                // Clave del título del SweetAlert de confirmación
-      'swalEraseUserConfirmedMessage' // Clave del mensaje de éxito de eliminación
+      (id) => this.usuarioService.eliminarUsuario(id),
+      'swalEraseUser',
+      'swalSure',
+      'swalEraseUserConfirmedMessage'
     );
   }
 
@@ -90,11 +88,6 @@ export class DetalleUsuarioComponent extends BaseComponent implements OnInit {
   }
 
   protected override navigateAfterDelete(): void {
-    // Aquí defines cómo navegar después de eliminar el usuario
     this.router.navigate(['/usuarios']);
   }
 }
-
-
-
-

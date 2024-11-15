@@ -36,7 +36,6 @@ export class NuevaFichaUsuarioComponent extends BaseComponent{
     }
 
     guardarFichaUsuario() {
-      console.log ('entrando a método');
       this.fichaUsuarioService.registrarFichaDeUsuario(this.fichaUsuario).subscribe(
         {
           next: () => {

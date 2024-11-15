@@ -23,7 +23,6 @@ export class ListaFichasUsuarioComponent extends BaseComponent implements OnInit
   filtro: string = '';                  // almacenar el texto del filtro
   fichasFiltradas: FichaUsuario[] = []; // almacenar los resultados filtrados
 
-
   constructor(
     private readonly fichaUsuarioService: FichaUsuarioService,
     private readonly router: Router,
@@ -80,12 +79,12 @@ export class ListaFichasUsuarioComponent extends BaseComponent implements OnInit
 
   eliminarFichaUsuario(id: number) {
     this.eliminarEntidad(
-      id,  // ID de la entidad a eliminar
-      this.fichasUsuario,  // Array de entidades
-      (id) => this.fichaUsuarioService.eliminarFichaDeUsuario(id),  // Método del servicio para eliminar
-      'swalEraseUserFile',  // Clave de texto de la alerta de confirmación
-      'swalSure',  // Clave de título de la alerta de confirmación
-      'swalEraseUserFileConfirmedMessage'  // Clave de texto después de la eliminación confirmada
+      id,                                                           // ID de la entidad a eliminar
+      this.fichasUsuario,                                           // array de entidades
+      (id) => this.fichaUsuarioService.eliminarFichaDeUsuario(id),
+      'swalEraseUserFile',
+      'swalSure',
+      'swalEraseUserFileConfirmedMessage'
     );
   }
 
@@ -106,16 +105,9 @@ export class ListaFichasUsuarioComponent extends BaseComponent implements OnInit
   }
 
   ocultarPassword(password: string): string {
-    return '●'.repeat(7);                               // muestra 7 caracteres especiales
+    return '●'.repeat(7);                               // muestra 7 puntos para ocultar el password
   }
 
-  override nextPage() {
-    super.nextPage();  // Usando el método heredado de BaseComponent
-  }
-
-  override prevPage() {
-    super.prevPage();  // Usando el método heredado de BaseComponent
-  }
 
   override ordenarPor(campo: string) {
     super.ordenarPor(campo);

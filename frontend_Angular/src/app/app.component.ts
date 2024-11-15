@@ -15,12 +15,10 @@ import { AuthService } from './service/auth.service';
 export class AppComponent implements OnInit{
   title = 'BD Management Tolkien Quiz';
 
-  // icono e idioma activo por defecto
-  activeLangIcon = 'assets/ico/es.png';
+  activeLangIcon = 'assets/ico/es.png';   // icono e idioma activo por defecto
   activeLangLabel = 'Español';
 
-  // lista de idiomas disponibles
-  languages = [
+  languages = [                                                     // lista de idiomas disponibles
     { code: 'es', label: 'Español', icon: 'assets/ico/es.png' },
     { code: 'en', label: 'English', icon: 'assets/ico/en.png' },
     { code: 'gz', label: 'Galego', icon: 'assets/ico/gz.png' },
@@ -54,14 +52,12 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // const token = localStorage.getItem('token');
     this.authService.loggedIn$.subscribe(isLoggedIn => {
       this.rol = localStorage.getItem('role');
       this.username = localStorage.getItem('username');
       this.isLoggedIn = isLoggedIn;
-      // this.router.navigate(['/']).then(() => window.location.reload());
+
       this.setZoomLevel(window.innerWidth);       //para ajuste del nivel de zoom en función del tamaño de pantalla, usando los dos métodos siguientes
-      // this.isLoggedIn = token !== null && this.rol !== null && this.username !== null;
     });
   }
 
@@ -81,19 +77,17 @@ export class AppComponent implements OnInit{
     }
   }
 
-  // con este método se cambia el idioma de la aplicación
-  changeLanguage(lang: string) {
+  changeLanguage(lang: string) {            // cambio del idioma de la aplicación
     this.translate.use(lang);
     const selectedLang = this.languages.find(language => language.code === lang);
     if (selectedLang) {
       this.activeLangIcon = selectedLang.icon;
       this.activeLangLabel = selectedLang.label;
     }
-    this.langMenuVisible = false; // así logramos que el menú después de seleccionar un idioma
+    this.langMenuVisible = false; // así logramos que el menú después de seleccionar un idioma se oculte
   }
 
-  // alternar el botón de menú de idioma
-  toggleLanguageMenu(visible: boolean) {
+  toggleLanguageMenu(visible: boolean) {      // alternar el botón de menú de idioma
     this.langMenuVisible = visible;
   }
 
@@ -101,4 +95,3 @@ export class AppComponent implements OnInit{
     this.authService.logout();
   }
 }
-

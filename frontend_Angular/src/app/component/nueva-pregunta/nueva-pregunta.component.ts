@@ -19,8 +19,8 @@ import { BaseComponent } from '../../base.component';
 })
 export class NuevaPreguntaComponent extends BaseComponent implements OnInit {
   pregunta: Pregunta = new Pregunta();
-  categorias: Categoria[] = [];  // Para cargar la lista de categorías
-  respuestaCorrectaIndex: number | null = null;  // Para seleccionar la respuesta correcta
+  categorias: Categoria[] = [];                       // cargar la lista de categorías
+  respuestaCorrectaIndex: number | null = null;       // seleccionar la respuesta correcta
   tipoPregunta: string = '';
 
   constructor(
@@ -34,7 +34,7 @@ export class NuevaPreguntaComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.cargarCategorias();
-    this.pregunta.respuestas = [new Respuesta(), new Respuesta(), new Respuesta(), new Respuesta()]; // Crear cuatro respuestas vacías por defecto
+    this.pregunta.respuestas = [new Respuesta(), new Respuesta(), new Respuesta(), new Respuesta()]; // crear cuatro respuestas vacías por defecto
   }
 
   private cargarCategorias() {

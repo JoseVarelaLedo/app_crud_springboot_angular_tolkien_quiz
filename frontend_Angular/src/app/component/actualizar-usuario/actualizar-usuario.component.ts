@@ -33,11 +33,13 @@ export class ActualizarUsuarioComponent extends BaseComponent implements OnInit 
     translate: TranslateService // Inyecta TranslateService
   ) {
     super(translate);
+    console.log (this.usuario.contrasena);
     this.esAdministrador = localStorage.getItem('role') === 'ROLE_Administrador';
   }
 
 
   ngOnInit() {
+
     this.getRoles();
     this.id = this.route.snapshot.params['id'];
 
@@ -63,6 +65,7 @@ export class ActualizarUsuarioComponent extends BaseComponent implements OnInit 
 
   onSubmit(): void {
     if (this.usuario) {
+      console.log (this.usuario.contrasena);
       this.usuarioService.actualizarUsuario(this.id, this.usuario).pipe(
         tap(() => {
           this.navigateListaUsuarios();

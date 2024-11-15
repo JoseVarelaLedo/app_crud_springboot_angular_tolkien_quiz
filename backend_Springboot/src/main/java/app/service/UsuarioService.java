@@ -9,7 +9,6 @@ import app.model.Usuario;
 import app.repository.FichaUsuarioRepository;
 import app.repository.RolRepository;
 import app.repository.UsuarioRepository;
-import app.rest.controller.FichaUsuarioRestController;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,11 +142,9 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional
     public Usuario crearUsuario(UsuarioDTO usuarioDTO) {
-        LOGGER.info("ENTRANDO AL MÉTODO DE CREACIÓN DE USUARIO");
         Optional<Rol> rolOptional = rolRepository.findById(usuarioDTO.getRolID());
         if (rolOptional.isEmpty()) {
            usuarioDTO.setRolID(3);
-           LOGGER.info("Se asigna rol de Usuario, el rol por defecto, ya que no se ha asignado un rol");
         }
         Rol rol = rolOptional.get();
 
@@ -167,7 +164,6 @@ public class UsuarioService implements UserDetailsService {
     }
 
     private void sincronizarCreacionEntidades(Usuario usuario){
-        LOGGER.info("ENTRANDO AL MÉTODO DE SINCRONIZACIÓN PARA " + usuario.getNickname());
         FichaUsuario fichaUsuario = FichaUsuario.builder()
                 .nickname(usuario.getNickname())
                 .password(usuario.getContrasena())
@@ -179,7 +175,6 @@ public class UsuarioService implements UserDetailsService {
                 .score(0L)
                 .fechaRegistro(LocalDateTime.now())
                 .build();
-        LOGGER.info("LLEGANDO AL SETTER PARA " + fichaUsuario.getNickname()+ " " + fichaUsuario.getCorreoElectronico()) ;
         usuario.setFichaUsuario(fichaUsuario);                                  // vincular ambos objetos
         fichaUsuario.setUsuario(usuario);
 
@@ -198,11 +193,14 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public Usuario actualizarUsuario(Long id, UsuarioDTO datosActualizados) throws ResourceNotFoundException {
         Usuario usuarioExistente = obtenerUsuarioPorId(id);
-
         usuarioExistente.setNickname(Optional.ofNullable(datosActualizados.getNickname()).orElse(usuarioExistente.getNickname()));      // asignar valores del DTO o mantener los existentes
-//        usuarioExistente.setContrasena(Optional.ofNullable(datosActualizados.getContrasena()).orElse(usuarioExistente.getContrasena()));
+
         if (datosActualizados.getContrasena() != null) {
-            usuarioExistente.setContrasena(passwordEncoder.encode(datosActualizados.getContrasena()));
+            boolean contrasenaCoincide = datosActualizados.getContrasena().equals(usuarioExistente.getContrasena());
+
+            if (!contrasenaCoincide) {                                                   // sólo recodificar si la nueva contraseña no coincide con la existente
+                usuarioExistente.setContrasena(passwordEncoder.encode(datosActualizados.getContrasena()));
+            }
         }
 
         if (datosActualizados.getRolID() != null) {                         // actualizar el rol si `rolID` en el DTO no es nulo

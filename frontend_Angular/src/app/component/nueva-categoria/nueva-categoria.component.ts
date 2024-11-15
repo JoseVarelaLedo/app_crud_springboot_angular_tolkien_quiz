@@ -76,5 +76,4 @@ export class NuevaCategoriaComponent extends BaseComponent{
   protected override navigateAfterDelete(): void {
       console.log ("empty");
   }
-
 }
