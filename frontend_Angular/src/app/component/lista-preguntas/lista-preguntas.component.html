@@ -89,8 +89,8 @@
         <td>{{ pregunta.esPreguntaRondaFinal ? 'Si': 'No'}}</td>
 
         <td class="lineaTabla" class="button-group">
-          <button (click)="actualizarPregunta(pregunta.id)" class="btn btn-info">{{'editButton' | translate}}</button>
-          <button (click)="eliminarPregunta(pregunta.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+          <button (click)="actualizarPregunta(pregunta.id)" class="btn btn-info" *ngIf="usuarioAdministrador || usuarioGestor">{{'editButton' | translate}}</button>
+          <button (click)="eliminarPregunta(pregunta.id)" class="btn btn-danger" *ngIf="usuarioAdministrador">{{'eraseButton' | translate}}</button>
         </td>
       </tr>
     </tbody>

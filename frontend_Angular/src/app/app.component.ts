@@ -34,6 +34,9 @@ export class AppComponent implements OnInit{
   isLoginPage: boolean;
   zoomLevel = 1;
 
+  usuarioAdministrador : boolean = false;
+  usuarioGestor : boolean = false;
+
 
   constructor(private readonly authService: AuthService, private readonly translate: TranslateService, private readonly router:Router) {
 
@@ -49,6 +52,10 @@ export class AppComponent implements OnInit{
     this.router.events.subscribe(() => {
       this.isLoginPage = this.router.url === '/login';
     });
+
+    this.rol = localStorage.getItem('role');
+    this.usuarioAdministrador = this.rol === 'ROLE_Administrador';
+    this.usuarioGestor = this.rol === 'ROLE_Gestor BD';
   }
 
   ngOnInit(): void {

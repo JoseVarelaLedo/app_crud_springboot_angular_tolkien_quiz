@@ -16,8 +16,14 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Esta clase inicializa la tabla de preguntas, con sus respuestas asociadas, con los datos necesarios;
+ * se inicia en tercer lugar dentro de las clases inicializadoras ya que hemos
+ * anotado con @Order(3), teniendo que iniciarse después de que las categorías existan, al tener dependecias
+ * con la tabla de categorías.  Se anota con @Order para que el framework Spring la trate de acuerdo a su naturaleza.
+ */
 @Component
-@Order(4)
+@Order(3)
 @DependsOn("initializerCategorias")
 public class DataInitializerPreguntaRespuesta {
 

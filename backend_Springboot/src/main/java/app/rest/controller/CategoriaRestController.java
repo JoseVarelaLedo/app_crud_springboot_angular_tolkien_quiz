@@ -12,6 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador REST para la clase {@link Categoria}.
+ * Se anota con @RestController para que SpringBoot lo reconozca como tal.
+ * @RequestMapping: indicamos el endpoint al que se apuntará para los métodos GET/POST/PUT/DELETE INVOCADOS
+ * @CrossOrigin: indicamos la URL del frontend con el que se comunicará el frontend.
+ * Se comunica con una entidad del servicio en el que se define el comportamiento de cada aacción invocada,
+ * autoinyectada mediante la anotación @Autowired
+ */
+
 @RestController
 @RequestMapping("/categorias")
 @CrossOrigin (origins = "http://localhost:4200/")
@@ -20,8 +29,17 @@ public class CategoriaRestController {
     @Autowired
     private CategoriaService categoriaService;
 
-    @GetMapping
-    private ResponseEntity <Page<Categoria>> getAll(
+    /**
+     * Obtiene una lista paginada de categorías, con opciones de ordenación.
+     *
+     * @param pag número de página (por defecto: 0).
+     * @param tam tamaño de página (por defecto: 7).
+     * @param campoOrdenacion campo para ordenar los resultados (por defecto: id).
+     * @param direccionOrdenacion dirección de ordenación: "asc" o "desc" (por defecto: asc).
+     * @return una página de categorías.
+     */
+    @GetMapping ("/lista")
+    public ResponseEntity <Page<Categoria>> getAll(
             @RequestParam(defaultValue = "0") int pag,
             @RequestParam(defaultValue = "7") int tam,
             @RequestParam(defaultValue = "id") String campoOrdenacion,
@@ -29,11 +47,22 @@ public class CategoriaRestController {
         return ResponseEntity.ok(categoriaService.listarCategorias(pag, tam, campoOrdenacion, direccionOrdenacion));
     }
 
+    /**
+     * Obtiene una lista completa de categorías sin paginación.
+     *
+     * @return una lista de todas las categorías.
+     */
     @GetMapping("/noPag")
-    private ResponseEntity<List<Categoria>> getAllNoPag(){
+    public ResponseEntity<List<Categoria>> getAllNoPag(){
         return ResponseEntity.ok(categoriaService.listarCategorias());
     }
 
+    /**
+     * Obtiene una categoría por su ID.
+     *
+     * @param id identificador único de la categoría.
+     * @return la categoría encontrada o lanza una excepción si no se encuentra.
+     */
     @GetMapping ("/buscarCategoriaPorId/id/{id}")
     public ResponseEntity<Categoria> getCategoriaPorId(@PathVariable Long id){
         try{
@@ -44,6 +73,12 @@ public class CategoriaRestController {
         }
     }
 
+    /**
+     * Crea una nueva categoría.
+     *
+     * @param categoria datos de la categoría a crear.
+     * @return la categoría creada con un estado HTTP 201.
+     */
     @PostMapping ("/crearCategoria")
     public ResponseEntity<Categoria> crearCategoria(@RequestBody Categoria categoria) {
         try {
@@ -54,6 +89,13 @@ public class CategoriaRestController {
         }
     }
 
+    /**
+     * Actualiza una categoría existente.
+     *
+     * @param id identificador de la categoría a actualizar.
+     * @param datosActualizados datos actualizados para la categoría.
+     * @return la categoría actualizada.
+     */
     @PutMapping("/editar/id/{id}")
     public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody Categoria datosActualizados) {
         try {
@@ -71,6 +113,12 @@ public class CategoriaRestController {
         }
     }
 
+    /**
+     * Elimina una categoría por su ID.
+     *
+     * @param id identificador de la categoría a eliminar.
+     * @return un mapa indicando que la eliminación fue exitosa.
+     */
     @DeleteMapping("/eliminar/id/{id}")
     public ResponseEntity<Map<String, Boolean>> borrarCategoria(@PathVariable Long id) {
         try {

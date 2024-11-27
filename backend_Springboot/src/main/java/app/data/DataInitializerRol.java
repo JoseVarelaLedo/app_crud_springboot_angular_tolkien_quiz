@@ -11,9 +11,14 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * Esta clase inicializa la tabla de roles con los datos necesarios;
+ * se inicia en segundo lugar dentro de las clases inicializadoras ya que hemos
+ * anotado con @Order(2), para que se inicie antes que las fichas de usuario,
+ * al tener esta última tabla dependencias con los roles.  Se anota con @Order para que el framework Spring la trate de acuerdo a su naturaleza.
+ */
 @Component
-@Order(3)
+@Order(2)
 public class DataInitializerRol {
 
     @Autowired

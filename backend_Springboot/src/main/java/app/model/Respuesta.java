@@ -8,6 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Clase para mapear la tabla de Respuestas en la Base de Datos.
+ * Las anotaciones @Data, @Builder, @AllArgsConstructor y @NoArgsConstructor son
+ * propias de Lombok, para ahorrar código,
+ * y @Data, @Entity y @Table las propias de SpringBoot / Hibernate para mapeado de BD.
+ */
 @Data
 @Entity
 @Builder
@@ -16,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table (name = "respuesta")
 
 public class Respuesta {
-    @Id
+    @Id                                                       // clave primaria autogenerada
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -26,7 +32,7 @@ public class Respuesta {
     @Column(name = "es_respuesta_correcta", nullable = false)
     private Boolean esRespuestaCorrecta;
 
-    @ManyToOne
+    @ManyToOne                                                      // relación muchos a uno. Una Pregunta puede tener muchas respuestas
     @JoinColumn (name = "pregunta_id", referencedColumnName = "id")
     @JsonIgnore
     private Pregunta pregunta;

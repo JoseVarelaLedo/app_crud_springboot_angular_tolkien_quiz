@@ -78,7 +78,9 @@ export class AuthService {
       this.loggedInSubject.next(false);
       this.router.navigate(['/login']);
     }
+    this.router.navigate(['/login']).then(() => window.location.reload()); // redirigir y recargar solo después de que se confirme la alerta
   }
+
 
 }
 export interface LoginResponse {

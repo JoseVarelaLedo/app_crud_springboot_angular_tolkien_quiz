@@ -28,6 +28,8 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
   searchResults: Usuario[] = [];
   fechaFiltro: string = '';
   mostrarFiltro = false;
+  usuarioAdministrador : boolean = false;
+  usuarioGestor : boolean = false;
 
   constructor(
     private readonly usuarioService: UsuarioService,
@@ -35,6 +37,9 @@ export class ListaUsuariosComponent extends BaseComponent implements OnInit, OnD
     translate: TranslateService,
   ) {
     super(translate);
+    const rol = localStorage.getItem('role');
+    this.usuarioAdministrador = rol === 'ROLE_Administrador';
+    this.usuarioGestor = rol === 'ROLE_Gestor BD';
   }
 
   ngOnInit() {

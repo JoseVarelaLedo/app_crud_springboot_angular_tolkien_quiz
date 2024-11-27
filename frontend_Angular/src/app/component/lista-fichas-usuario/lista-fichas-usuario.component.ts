@@ -22,6 +22,8 @@ export class ListaFichasUsuarioComponent extends BaseComponent implements OnInit
   langChangeSubscription: Subscription = new Subscription();
   filtro: string = '';                  // almacenar el texto del filtro
   fichasFiltradas: FichaUsuario[] = []; // almacenar los resultados filtrados
+  usuarioAdministrador : boolean = false;
+  usuarioGestor : boolean = false;
 
   constructor(
     private readonly fichaUsuarioService: FichaUsuarioService,
@@ -29,6 +31,9 @@ export class ListaFichasUsuarioComponent extends BaseComponent implements OnInit
     translate: TranslateService
   ) {
     super(translate);
+    const rol = localStorage.getItem('role');
+    this.usuarioAdministrador = rol === 'ROLE_Administrador';
+    this.usuarioGestor = rol === 'ROLE_Gestor BD';
   }
 
   ngOnInit() {

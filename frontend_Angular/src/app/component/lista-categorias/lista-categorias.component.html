@@ -21,8 +21,8 @@
         <td class="lineaTabla">{{ categoria.categoriaDesc }}</td>
 
         <td class="button-group" class="lineaTabla">
-          <button (click)="actualizarCategoria(categoria.id)" class="btn btn-info">{{'editButton' | translate}}</button>
-          <button (click)="eliminarCategoria(categoria.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+          <button (click)="actualizarCategoria(categoria.id)" class="btn btn-info" *ngIf=" usuarioAdministrador || usuarioGestor">{{'editButton' | translate}}</button>
+          <button (click)="eliminarCategoria(categoria.id)" class="btn btn-danger"  *ngIf="usuarioAdministrador">{{'eraseButton' | translate}}</button>
         </td>
       </tr>
     </tbody>

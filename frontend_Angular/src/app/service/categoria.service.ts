@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Categoria } from '../model/categoria';
 
@@ -11,6 +11,7 @@ export class CategoriaService {
   private readonly baseURL = "http://localhost:9666/categorias";
   private readonly authHeaders: HttpHeaders;
 
+
   constructor(private readonly httpClient: HttpClient) {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -20,7 +21,12 @@ export class CategoriaService {
   }
 
   obtenerCategorias(page: number, size: number, sortField: string, sortDirection: string): Observable<Categoria[]> {
-    return this.httpClient.get<Categoria[]>(`${this.baseURL}?pag=${page}&tam=${size}&campoOrdenacion=${sortField}&direccionOrdenacion=${sortDirection}`, { headers: this.authHeaders });
+    let params = new HttpParams()
+    .set('pag', page.toString())
+    .set('tam', size.toString())
+    .set('campoOrdenacion', sortField)
+    .set('direccionOrdenacion', sortDirection);
+    return this.httpClient.get<Categoria[]>(`${this.baseURL}/lista`, { params, headers: this.authHeaders });
   }
   obtenerCategoriasSinPaginar(){
     return this.httpClient.get<Categoria[]>(`${this.baseURL}/noPag`, { headers: this.authHeaders });

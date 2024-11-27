@@ -5,14 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * Clase para mapear la tabla de Fichas de Usuario en la Base de Datos.
+ * Las anotaciones @Data, @Builder, @AllArgsConstructor y @NoArgsConstructor son
+ * propias de Lombok, para ahorrar código,
+ * y @Data, @Entity y @Table las propias de SpringBoot / Hibernate para mapeado de BD.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "rol")
 public class Rol {
-    @Id
+    @Id                                                             // clave primaria autogenerada
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

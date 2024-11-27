@@ -21,6 +21,8 @@ export class ListaCategoriasComponent extends BaseComponent implements OnInit, O
   totalElements = 0;
   columnas: any[] = [];
   langChangeSubscription: Subscription = new Subscription();
+  usuarioAdministrador : boolean = false;
+  usuarioGestor: boolean = false;
 
   constructor(
     private readonly categoriaService: CategoriaService,
@@ -28,6 +30,9 @@ export class ListaCategoriasComponent extends BaseComponent implements OnInit, O
     translate: TranslateService,
   ) {
     super(translate);
+    const rol = localStorage.getItem('role');
+    this.usuarioAdministrador = rol === 'ROLE_Administrador';
+    this.usuarioGestor = rol === 'ROLE_Gestor BD';
   }
 
   ngOnInit() {

@@ -5,6 +5,12 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Clase DTO para simplificar la transmisión de datos relativos a la tabla de Fichas de Usuario.
+ * Como dicha tabla tiene dependencias con la tabla Usuario, al tener un DTO se envían datos simplificados
+ * teniendo un DTO para ello, sin transmitir objetos de tipo Usuario. Las anotaciones son las propias de Lombok para ahorrar código,
+ * sin explicitar constructores, y métodos accesores y modificadores standard.
+ */
 @Data
 @Getter
 @Setter

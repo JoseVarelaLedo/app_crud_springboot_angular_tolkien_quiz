@@ -48,28 +48,28 @@
 
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a routerLink="categorias" routerLinkActive="active" class="nav-link">{{'categoryList' | translate}}</a>
+        <a routerLink="categorias" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn">{{'categoryList' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a routerLink="fichas-usuario" routerLinkActive="active" class="nav-link">{{'userFileList' | translate}}</a>
+        <a routerLink="fichas-usuario" routerLinkActive="active" class="nav-link"  *ngIf="isLoggedIn && (usuarioAdministrador || usuarioGestor)">{{'userFileList' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a routerLink="preguntas" routerLinkActive="active" class="nav-link">{{'questionList' | translate}}</a>
+        <a routerLink="preguntas" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn">{{'questionList' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a routerLink="usuarios" routerLinkActive="active" class="nav-link">{{'userList' | translate}}</a>
+        <a routerLink="usuarios" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn">{{'userList' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a routerLink="nueva-categoria" routerLinkActive="active" class="nav-link">{{'newCategory' | translate}}</a>
+        <a routerLink="nueva-categoria" routerLinkActive="active" class="nav-link"  *ngIf="usuarioAdministrador || usuarioGestor">{{'newCategory' | translate}}</a>
       </li>
       <li class="nav-item">
         <a routerLink="nueva-ficha-usuario" routerLinkActive="active" class="nav-link">{{'newUserFile' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a routerLink="nueva-pregunta" routerLinkActive="active" class="nav-link">{{'newQuestion' | translate}}</a>
+        <a routerLink="nueva-pregunta" routerLinkActive="active" class="nav-link"  *ngIf="usuarioAdministrador || usuarioGestor">{{'newQuestion' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a routerLink="nuevo-usuario" routerLinkActive="active" class="nav-link">{{'newUser' | translate}}</a>
+        <a routerLink="nuevo-usuario" routerLinkActive="active" class="nav-link"  *ngIf="usuarioAdministrador">{{'newUser' | translate}}</a>
       </li>
     </ul>
 

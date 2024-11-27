@@ -19,6 +19,6 @@ export class RolServiceService {
   }
 
   obtenerRoles(): Observable<Rol[]> {
-    return this.httpClient.get<Rol[]>(`${this.baseURL}`, { headers: this.authHeaders });
+    return this.httpClient.get<Rol[]>(`${this.baseURL}/lista`, { headers: this.authHeaders });
   }
 }

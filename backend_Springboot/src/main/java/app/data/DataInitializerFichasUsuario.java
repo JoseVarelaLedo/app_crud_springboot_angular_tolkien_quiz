@@ -17,9 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * Esta clase inicializa la tabla de fichas de usuario con los datos necesarios;
+ * se inicia en cuarto, y último, lugar dentro de las clases inicializadoras ya que hemos
+ * anotado con @Order(4), ya que necesitamos que previamente se haya iniciado y llenado
+ * la tabla que almacena los roles.  Se anota con @Order para que el framework Spring la trate de acuerdo a su naturaleza.
+ */
 @Component
-@Order(5)
+@Order(4)
 @DependsOn("initializerRol")
 public class DataInitializerFichasUsuario {
 

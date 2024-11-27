@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Clase para mapear la tabla de Preguntas en la Base de Datos.
+ * Las anotaciones @Data, @Builder, @AllArgsConstructor y @NoArgsConstructor son
+ * propias de Lombok, para ahorrar código,
+ * y @Data, @Entity y @Table las propias de SpringBoot / Hibernate para mapeado de BD.
+ */
 @Data
 @Entity
 @Builder
@@ -16,7 +22,7 @@ import java.util.List;
 @Table (name="pregunta")
 
 public class Pregunta {
-    @Id
+    @Id                                                     // clave primaria autogenerada
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,12 +35,12 @@ public class Pregunta {
     @Column(name = "es_pregunta_ronda_final", nullable = false)
     private Boolean esPreguntaRondaFinal;
 
-    @ManyToOne
+    @ManyToOne                                                          // relación muchos a uno, una categoría puede tener muchas preguntas asociadas
     @JoinColumn (name = "categoria_id", referencedColumnName = "id")
 
     private Categoria categoria;
 
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL)
-    private List<Respuesta> respuestas;  // Agregando la lista de respuestas
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL)            // relación uno a muchos, una pregunta puede tener muchas respuestas
+    private List<Respuesta> respuestas;  // agregamos la lista de respuestas
 
 }

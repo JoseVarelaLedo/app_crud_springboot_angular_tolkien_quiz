@@ -9,6 +9,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Clase para mapear la tabla de Usuario en la Base de Datos.
+ * Las anotaciones @Data, @Builder, @AllArgsConstructor y @NoArgsConstructor son
+ * propias de Lombok, para ahorrar código,
+ * y @Data, @Entity y @Table las propias de SpringBoot / Hibernate para mapeado de BD.
+ */
 @Data
 @Entity
 @Builder
@@ -16,7 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table (name = "usuario")
 public class Usuario {
-    @Id
+    @Id                                                     // clave primaria autogenerada
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -26,12 +32,12 @@ public class Usuario {
     @Column(nullable = false, length = 150)
     private String contrasena;
 
-    @ManyToOne
+    @ManyToOne                                                      // relación muchos a uno, ya que un mismo rol puede ser asignado a muchos usuarios
     @JoinColumn(name = "rol_id", referencedColumnName = "id")
     @JsonIgnore
     private Rol rol;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne (cascade = CascadeType.ALL)                           // cada usuario se corresponde con una ficha de usuario
     @JoinColumn(name = "ficha_usuario", referencedColumnName = "id")
     @JsonIgnore
     private FichaUsuario fichaUsuario;

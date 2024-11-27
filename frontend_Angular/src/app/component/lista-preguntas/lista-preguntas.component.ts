@@ -30,7 +30,8 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
   filtro: string = '';                                                // necesitamos esta variable para almacenar el texto del filtro
   langChangeSubscription: Subscription = new Subscription();          // así estamos siempre suscritos a los cambios de idioma en tiempo real
   mostrarFiltro = false;
-
+  usuarioAdministrador : boolean = false;
+  usuarioGestor : boolean = false;
 
   constructor(
     private readonly preguntaService: PreguntaService,
@@ -39,6 +40,9 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
     translate: TranslateService
   ) {
     super (translate);
+    const rol = localStorage.getItem('role');
+    this.usuarioAdministrador = rol === 'ROLE_Administrador';
+    this.usuarioGestor = rol === 'ROLE_Gestor BD';
   }
 
   ngOnInit() {
@@ -141,6 +145,7 @@ export class ListaPreguntasComponent extends BaseComponent implements OnInit, On
   }
 
   eliminarPregunta(id: number): void {
+    console.log ('Si diese error, comprobar si tiene respuestas asociadas, en cuyo caso no deja borrar por restricciones de clave foránea');
     this.eliminarEntidad(
       id,
       this.preguntas,

@@ -20,7 +20,12 @@ export class UsuarioService {
   }
 
   obtenerListaDeUsuarios(page: number, size: number, sortField: string, sortDirection: string): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${this.baseURL}?pag=${page}&tam=${size}&campoOrdenacion=${sortField}&direccionOrdenacion=${sortDirection}`, { headers: this.authHeaders });
+    let params = new HttpParams()
+    .set('pag', page.toString())
+    .set('tam', size.toString())
+    .set('campoOrdenacion', sortField)
+    .set('direccionOrdenacion', sortDirection);
+    return this.httpClient.get<Usuario>(`${this.baseURL}/lista`, { params, headers: this.authHeaders });
   }
 
   obtenerUsuarioPorId (id:number) : Observable<Usuario>{

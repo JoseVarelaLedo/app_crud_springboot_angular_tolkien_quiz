@@ -63,8 +63,8 @@
         <td class="lineaTabla">{{ usuario.fechaRegistro | date: 'dd/MM/yyyy, h:mm a' }}</td>
 
         <td class="button-group" class="lineaTabla">
-          <button (click)="actualizarUsuario(usuario.id)" class="btn btn-info">{{'editButton' | translate}}</button>
-          <button (click)="eliminarUsuario(usuario.id)" class="btn btn-danger">{{'eraseButton' | translate}}</button>
+          <button (click)="actualizarUsuario(usuario.id)" class="btn btn-info" *ngIf="usuarioAdministrador || usuarioGestor">{{'editButton' | translate}}</button>
+          <button (click)="eliminarUsuario(usuario.id)" class="btn btn-danger" *ngIf="usuarioAdministrador">{{'eraseButton' | translate}}</button>
         </td>
 
       </tr>

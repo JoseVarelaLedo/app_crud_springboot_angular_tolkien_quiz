@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pregunta } from '../model/pregunta';
 
@@ -21,7 +21,12 @@ export class PreguntaService {
 
 
   obtenerListaDePreguntas(page: number, size: number, sortField: string, sortDirection: string): Observable<any> {
-    return this.httpClient.get<any>(`${this.baseURL}?pag=${page}&tam=${size}&campoOrdenacion=${sortField}&direccionOrdenacion=${sortDirection}`, { headers: this.authHeaders });
+    let params = new HttpParams()
+    .set('pag', page.toString())
+    .set('tam', size.toString())
+    .set('campoOrdenacion', sortField)
+    .set('direccionOrdenacion', sortDirection);
+    return this.httpClient.get<any>(`${this.baseURL}/lista`, { params, headers: this.authHeaders });
   }
 
   obtenerListaDePreguntasPorCategoria(page: number, size: number, sortField: string, sortDirection: string, categoriaId: number): Observable<any> {
